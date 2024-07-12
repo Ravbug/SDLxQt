@@ -1,20 +1,33 @@
-#include <SDL.h>
+#include <SDL3/SDL.h>
 #include <cmath>
-#include <SDL_main.h>
+#include <SDL3/SDL_main.h>
 
 #include <QApplication>
 #include <QHBoxLayout>
 #include <QMainWindow>
 #include <QPushButton>
+#include <QFrame>
 
 class MainWindow : public QMainWindow{
 public:
     MainWindow(QWidget* parent = nullptr) : QMainWindow(parent){
-        this->setGeometry(300, 300, 800, 400);
         this->setWindowTitle("Qt Window");
-        auto button = new QPushButton("Push me!", this);
         
-        this->setCentralWidget(button);
+        auto layout = new QHBoxLayout;
+        
+        auto button = new QPushButton("Push me!", this);
+        layout->addWidget(button);
+        
+        connect(button,&QPushButton::released,this,&MainWindow::ButtonClicked);
+        
+        auto frame = new QFrame;
+        frame->setLayout(layout);
+        
+        this->setCentralWidget(frame);
+    }
+    
+    void ButtonClicked(){
+        SDL_Log("Qt Button Clicked!");
     }
 };
 
@@ -38,7 +51,7 @@ int main(int argc, char* argv[]){
         SDL_Fail();
     }
     
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL, 0);
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
     if (!renderer){
         SDL_Fail();
     }
@@ -71,6 +84,9 @@ int main(int argc, char* argv[]){
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_EVENT_QUIT)
                 app_quit = true;
+            if (event.type == SDL_EVENT_WINDOW_RESIZED){
+                SDL_Log("Window resized to: %dx%d",event.window.data1, event.window.data2);
+            }
             break;
         }
         
