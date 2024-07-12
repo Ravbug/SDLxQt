@@ -65,6 +65,7 @@ int main(int argc, char* argv[]){
     bool app_quit = false;
     while (!app_quit) {
         // Get events.
+        qtApplication.processEvents(QEventLoop::ProcessEventsFlag::AllEvents);
 
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
@@ -82,8 +83,6 @@ int main(int argc, char* argv[]){
         SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer);
         SDL_RenderPresent(renderer);
-        printf("Frame");
-        qtApplication.processEvents(QEventLoop::ProcessEventsFlag::AllEvents, 16);
     }
 
 
