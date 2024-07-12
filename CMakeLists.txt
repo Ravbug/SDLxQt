@@ -20,3 +20,16 @@ qt_standard_project_setup()
 
 # Link it all up
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL3::SDL3 Qt6::Widgets)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    MACOSX_BUNDLE TRUE
+)
+
+if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
+    INSTALL(CODE
+        "include(BundleUtilities)
+        fixup_bundle(\"$<TARGET_BUNDLE_DIR:${PROJECT_NAME}>\" \"\" \"\")
+        "
+        COMPONENT Runtime
+    )
+endif()

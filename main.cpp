@@ -101,6 +101,7 @@ int main(int argc, char* argv[]){
         SDL_RenderPresent(renderer);
     }
 
+    qtApplication.quit();
 
     // cleanup everything at the end
     SDL_DestroyRenderer(renderer);
