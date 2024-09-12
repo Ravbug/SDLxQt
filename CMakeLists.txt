@@ -23,6 +23,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE SDL3::SDL3 Qt6::Widgets)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     MACOSX_BUNDLE TRUE
+    XCODE_GENERATE_SCHEME TRUE
 )
 
 install(TARGETS ${PROJECT_NAME}

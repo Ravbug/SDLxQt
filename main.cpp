@@ -41,18 +41,18 @@ void SDL_Fail(){
 int main(int argc, char* argv[]){
     
     // init the library, here we make a window so we only need the Video capabilities.
-    if (SDL_Init(SDL_INIT_VIDEO)){
+    if (not SDL_Init(SDL_INIT_VIDEO)){
         SDL_Fail();
     }
     
     // create a window
     SDL_Window* window = SDL_CreateWindow("SDL Window", 352, 430, SDL_WINDOW_RESIZABLE);
-    if (!window){
+    if (not window){
         SDL_Fail();
     }
     
     SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
-    if (!renderer){
+    if (not renderer){
         SDL_Fail();
     }
     
